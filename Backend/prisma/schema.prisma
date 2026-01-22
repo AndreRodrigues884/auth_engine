@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// 1. Definimos os planos possíveis
+enum Plan {
+  FREE
+  PRO
+}
+
 model User {
   id                    String    @id @default(uuid())
   email                 String    @unique
@@ -15,8 +21,15 @@ model User {
   verificationToken     String?   @unique
   resetPasswordToken    String?   @unique
   resetPasswordExpires  DateTime?
+  
+  // 2. Adicionamos o plano com valor padrão 'FREE'
+  plan                  Plan      @default(FREE)
+  
+  // 3. Opcional: Guardamos o ID do cliente Stripe para futuras transações
+  stripeCustomerId      String?   @unique
+  
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 
-  @@map("users") // Nome da tabela na BD será 'users'
+  @@map("users")
 }

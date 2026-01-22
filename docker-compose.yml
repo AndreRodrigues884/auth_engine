@@ -11,10 +11,11 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+      - /app/prisma/client
     environment:
       - DATABASE_URL=postgresql://admin:admin123@db:5432/auth_db
       - REDIS_URL=redis://redis:6379
-      - JWT_SECRET=${JWT_SECRET}
+      - JWT_SECRET=48b44dc8b21db69683b514d7f645661f
     depends_on:
       - db
       - redis
